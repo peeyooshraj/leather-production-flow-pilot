@@ -5,7 +5,7 @@ A local-first decision-support prototype for two recurring manufacturing questio
 1. **Where does production flow show persistent pressure?**
 2. **What recorded conditions contributed time, quality, or output evidence without double-counting or inventing causality?**
 
-The prototype is framed around leather-goods manufacturing, but the included dataset is fully synthetic. It has **not** been deployed at, validated by, or endorsed by Paradigm Leather Accessories or any other named factory.
+The prototype is framed around leather-goods manufacturing, but the included dataset is fully synthetic. It has **not** been deployed at, validated by, or endorsed by any leather-goods manufacturer.
 
 ## Why this project exists
 
