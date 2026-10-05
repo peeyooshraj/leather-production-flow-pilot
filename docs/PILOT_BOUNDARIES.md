@@ -65,7 +65,7 @@ It does not implement a causal estimator. A before/after sequence alone cannot e
 
 ## Data and deployment boundary
 
-This repository contains synthetic data only. It is not evidence of deployment at, endorsement by, or validation from Paradigm Leather Accessories or any other named company.
+This repository contains synthetic data only. It is not evidence of deployment at, endorsement by, or validation from any leather-goods manufacturer.
 
 The current prototype does not implement:
 
@@ -78,4 +78,3 @@ The current prototype does not implement:
 - validated productivity uplift
 
 A real pilot should begin only after company permission, a defined data-handling procedure, agreed measurement points, a baseline period and predefined pass/fail criteria.
-
