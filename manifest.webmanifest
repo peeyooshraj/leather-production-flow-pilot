@@ -1,0 +1,9 @@
+{
+  "name": "Flow Pilot",
+  "short_name": "Flow Pilot",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f3ec",
+  "theme_color": "#141a18",
+  "description": "Local-first leather-goods production flow and loss pilot"
+}
