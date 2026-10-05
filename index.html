@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#141a18" />
+  <title>Flow Pilot</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">Leather-goods production pilot</div>
+      <h1>Flow Pilot</h1>
+    </div>
+    <div class="demo-pill">Synthetic data</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="kicker">DEMO-101 · Ladies leather handbag</p>
+        <h2>Find pressure early. Explain loss honestly.</h2>
+        <p class="lede">A small shop-floor prototype combining Production Flow Radar and Production Loss Accounting. No worker ranking. No invented causes.</p>
+      </div>
+      <div class="hero-metric">
+        <span>Shift target</span>
+        <strong id="target">500</strong>
+        <small>good units</small>
+      </div>
+    </section>
+
+    <nav class="tabs" aria-label="App views">
+      <button class="tab active" data-view="radar">Flow Radar</button>
+      <button class="tab" data-view="loss">Loss Accounting</button>
+      <button class="tab" data-view="update">Hourly Update</button>
+      <button class="tab" data-view="setup">Pilot Setup</button>
+    </nav>
+
+    <section id="radar" class="view active">
+      <div class="section-head">
+        <div><p class="kicker">Current production flow</p><h2>Where should we investigate?</h2></div>
+        <p class="muted">Rules explain the signal; they do not assign blame.</p>
+      </div>
+      <div id="flow-list" class="flow-list"></div>
+      <aside id="explanation" class="detail-panel" aria-live="polite">
+        <p class="kicker">Select an operation</p>
+        <h3>Evidence will appear here</h3>
+        <p class="muted">The app separates observation from explanation.</p>
+      </aside>
+    </section>
+
+    <section id="loss" class="view">
+      <div class="section-head">
+        <div><p class="kicker">Loss accounting</p><h2>What actually happened?</h2></div>
+        <p class="muted">Minutes, occurrences and quality counts remain separate metrics.</p>
+      </div>
+      <div class="metric-grid">
+        <article><span>Target</span><strong>500</strong><small>good units</small></article>
+        <article><span>Actual</span><strong id="actual-output">427</strong><small>good units</small></article>
+        <article class="warn"><span>Plan gap</span><strong id="shortfall">73</strong><small>not automatically “lost units”</small></article>
+      </div>
+      <div class="two-col">
+        <div>
+          <h3>Net blocking minutes</h3>
+          <div id="pareto" class="pareto"></div>
+          <p class="micro">Overlapping causes remain “Overlap / unresolved” until evidence supports allocation.</p>
+        </div>
+        <div>
+          <h3>Quality genealogy</h3>
+          <div id="quality" class="quality"></div>
+        </div>
+      </div>
+      <div class="event-list-wrap">
+        <h3>Recorded disturbances</h3>
+        <div id="events" class="event-list"></div>
+      </div>
+      <form id="issue-form" class="update-form issue-form">
+        <label>Operation<select id="issue-op-select"></select></label>
+        <label>Observed condition<select id="category-select"><option value="MATERIAL">Material/component</option><option value="MACHINE">Machine/equipment</option><option value="QUALITY">Quality/rework</option><option value="MANPOWER">Manpower</option><option value="PROCESS">Process/method</option><option value="PLANNING">Planning</option><option value="EXTERNAL">External/job-work</option><option value="UNKNOWN">Unknown</option></select></label>
+        <label>Short note<input id="condition-input" placeholder="What did you actually observe?" /></label>
+        <button class="primary" type="submit">Start issue timer</button>
+        <p id="issue-status" class="micro"></p>
+        <div id="open-issues" class="open-issues"></div>
+      </form>
+      <form id="quality-form" class="update-form issue-form">
+        <label>Inspected<input id="q-inspected" type="number" min="0" /></label>
+        <label>First-pass failures<input id="q-failed" type="number" min="0" /></label>
+        <label>Recovered after rework<input id="q-recovered" type="number" min="0" /></label>
+        <label>Final rejects<input id="q-rejected" type="number" min="0" /></label>
+        <label>Still in rework<input id="q-pending" type="number" min="0" value="0" /></label>
+        <button class="primary" type="submit">Add quality cohort</button>
+        <p id="quality-status" class="micro"></p>
+      </form>
+      <form id="intervention-form" class="update-form issue-form">
+        <label>Resolved issue<select id="intervention-event"></select></label>
+        <label>Action taken<input id="action-input" placeholder="e.g. machine changed" /></label>
+        <label>Observed outcome<select id="outcome-select"><option value="UNKNOWN">Not known yet</option><option value="IMPROVED">Improved afterward</option><option value="NO_CHANGE">No material change</option><option value="WORSENED">Worsened afterward</option></select></label>
+        <button class="primary" type="submit">Record intervention evidence</button>
+      </form>
+    </section>
+
+    <section id="update" class="view">
+      <div class="section-head">
+        <div><p class="kicker">Fast observation</p><h2>One operation, one interval</h2></div>
+        <p class="muted">Blank means unknown. It never becomes zero automatically.</p>
+      </div>
+      <form id="update-form" class="update-form">
+        <label>Operation<select id="op-select"></select></label>
+        <label>Good output<input id="good-input" type="number" min="0" inputmode="numeric" placeholder="e.g. 47" /></label>
+        <label>WIP waiting<input id="wip-input" type="number" min="0" inputmode="numeric" placeholder="e.g. 92" /></label>
+        <label>Minutes represented<input id="minutes-input" type="number" min="1" max="720" value="60" inputmode="numeric" /></label>
+        <label>Stop status<select id="stop-select"><option value="normal">Working normally</option><option value="planned">Planned stop</option><option value="unplanned">Unplanned stop</option></select></label>
+        <label class="check"><input id="buffer-input" type="checkbox" /> WIP here is an intentional planned buffer/batch</label>
+        <button class="primary" type="submit">Save observation locally</button>
+        <p id="save-status" class="micro" role="status"></p>
+      </form>
+      <form id="result-form" class="update-form compact-form">
+        <label>Current/final good output<input id="actual-input" type="number" min="0" placeholder="e.g. 427" /></label>
+        <button class="primary" type="submit">Update good output</button>
+      </form>
+      <form id="correction-form" class="update-form compact-form">
+        <label>Observation to correct<select id="correction-select"></select></label>
+        <label>Correct good output<input id="correct-good" type="number" min="0" /></label>
+        <label>Correct WIP<input id="correct-wip" type="number" min="0" /></label>
+        <label>Reason for correction<input id="correction-reason" placeholder="Required" /></label>
+        <button class="primary" type="submit">Save correction with history</button>
+        <p id="correction-status" class="micro"></p>
+      </form>
+      <div class="privacy-note">
+        <strong>Pilot boundary</strong>
+        <p>This demo stores manual entries only in this browser. It contains synthetic data only and sends nothing to a server.</p>
+      </div>
+    </section>
+
+    <section id="setup" class="view">
+      <div class="section-head">
+        <div><p class="kicker">Private local pilot</p><h2>Configure one simple production flow</h2></div>
+        <p class="muted">This changes only this browser. Use synthetic values until company permission exists for real production data.</p>
+      </div>
+      <form id="setup-form" class="update-form">
+        <label>Product or style label<input id="style-input" placeholder="e.g. Demo handbag" /></label>
+        <label>Shift target<input id="target-input" type="number" min="0" value="500" /></label>
+        <label>Operations, separated by commas<input id="operations-input" value="Cutting, Skiving, Preparation, Stitching, Assembly, Finishing" /></label>
+        <label>Required flow per hour<input id="rate-input" type="number" min="0" value="60" /></label>
+        <label class="check"><input id="comparable-input" type="checkbox" checked /> Tracked operations use comparable transfer units</label>
+        <button class="primary" type="submit">Start blank local pilot</button>
+        <p class="micro">If operations use different physical units, untick the comparison box. The app will record observations but will not pretend their rates are directly comparable.</p>
+      </form>
+      <div class="privacy-note">
+        <strong>Local backup</strong>
+        <p>Export creates a JSON file on this device. It does not upload anything.</p>
+        <button id="export-button" class="secondary" type="button">Export local backup</button>
+        <button id="demo-button" class="secondary" type="button">Return to synthetic demo</button>
+      </div>
+      <div class="privacy-note">
+        <strong>Shift lifecycle</strong>
+        <p id="shift-status">Demo mode</p>
+        <input id="lifecycle-reason" placeholder="Reason required for reopening a closed shift" />
+        <button id="close-shift" class="secondary" type="button">Close shift</button>
+        <button id="reopen-shift" class="secondary" type="button">Reopen shift</button>
+      </div>
+      <div class="event-list-wrap">
+        <h3>Local audit history</h3>
+        <div id="audit-list" class="event-list"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>Simulation Fixture 001 · prototype v0.3</footer>
+  <script type="module" src="src/app-v03.js"></script>
+</body>
+</html>
