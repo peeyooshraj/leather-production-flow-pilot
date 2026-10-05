@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#141a18" />
+  <title>Flow Pilot One File</title>
+  <style>
+:root{--ink:#18201d;--muted:#68736e;--paper:#f5f3ec;--card:#fff;--line:#d9ddd9;--green:#20734b;--amber:#b96b10;--red:#a63a31;--yellow:#967514;--grey:#68736e;--shadow:0 18px 50px rgba(31,41,37,.08)}
+.secondary{border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);padding:10px 12px;font-weight:750;margin:8px 8px 0 0;cursor:pointer}.check{display:flex!important;gap:9px;align-items:center;color:var(--ink)!important}.check input{width:auto;margin:0}
+.issue-form,.compact-form{margin-top:14px}.open-issues{grid-column:1/-1}.open-issue{display:flex;justify-content:space-between;gap:12px;align-items:center;border-top:1px solid var(--line);padding:10px 0}.resolve{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 10px;font-weight:750;cursor:pointer}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.45}.topbar,main,footer{max-width:1120px;margin:auto}.topbar{display:flex;justify-content:space-between;align-items:center;padding:28px 24px 16px}.topbar h1{margin:1px 0;font-size:21px;letter-spacing:-.02em}.eyebrow,.kicker{font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}.demo-pill{padding:7px 11px;border:1px solid #d7b867;background:#fff9e3;border-radius:999px;font-size:12px;color:#705711}main{padding:12px 24px 40px}.hero{background:#141a18;color:#fff;border-radius:22px;padding:34px;display:flex;justify-content:space-between;gap:32px;align-items:end;box-shadow:var(--shadow)}.hero h2{font-size:36px;line-height:1.05;max-width:700px;margin:10px 0 12px;letter-spacing:-.04em}.hero .kicker{color:#aeb9b4}.lede{color:#c9d0cd;max-width:680px;margin:0}.hero-metric{min-width:170px;padding:18px;border-left:1px solid #48514d}.hero-metric span,.hero-metric small{display:block;color:#aeb9b4}.hero-metric strong{display:block;font-size:46px;line-height:1;margin:8px 0}.tabs{display:flex;gap:8px;padding:22px 0 12px}.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 15px;font-weight:750;color:var(--muted);cursor:pointer}.tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}.view{display:none}.view.active{display:block}.section-head{display:flex;justify-content:space-between;gap:20px;align-items:end;margin:24px 0 16px}.section-head h2{font-size:27px;margin:4px 0 0;letter-spacing:-.025em}.muted,.micro{color:var(--muted)}.section-head .muted{max-width:410px;text-align:right;font-size:13px}.flow-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.flow-card{appearance:none;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:16px;padding:17px;cursor:pointer;box-shadow:0 3px 16px rgba(0,0,0,.025)}.flow-card:hover{transform:translateY(-1px);box-shadow:var(--shadow)}.flow-top{display:flex;justify-content:space-between;gap:12px;align-items:center}.flow-name{font-size:17px;font-weight:780}.badge{font-size:10px;font-weight:850;letter-spacing:.06em;border-radius:999px;padding:5px 8px;background:#eef0ef;color:var(--grey)}.badge.HEALTHY{background:#e8f5ed;color:var(--green)}.badge.PRESSURE{background:#fff1df;color:var(--amber)}.badge.POSSIBLE_CONSTRAINT{background:#fde9e7;color:var(--red)}.badge.STARVED{background:#fff8dc;color:var(--yellow)}.flow-stats{display:flex;gap:22px;margin-top:22px}.flow-stats strong,.flow-stats small{display:block}.flow-stats strong{font-size:24px}.flow-stats small{font-size:11px;color:var(--muted)}.detail-panel{margin-top:14px;border-radius:16px;background:#fff;border:1px solid var(--line);padding:20px}.detail-panel h3{margin:4px 0 8px}.reason-list{margin:10px 0;padding-left:20px}.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.metric-grid article{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}.metric-grid span,.metric-grid small{display:block;color:var(--muted)}.metric-grid strong{font-size:38px}.metric-grid .warn{border-color:#e6c6a3}.two-col{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:14px}.two-col>div,.event-list-wrap,.update-form,.privacy-note{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}.two-col h3,.event-list-wrap h3{margin-top:0}.pareto-row{display:grid;grid-template-columns:150px 1fr 58px;align-items:center;gap:10px;margin:13px 0;font-size:13px}.bar-track{height:9px;background:#edf0ee;border-radius:999px;overflow:hidden}.bar{height:100%;background:#566c63;border-radius:999px}.quality-row{display:flex;justify-content:space-between;border-bottom:1px solid #eceeec;padding:10px 0}.quality-row:last-child{border:none}.quality-row strong{font-variant-numeric:tabular-nums}.micro{font-size:12px}.event-list-wrap{margin-top:14px}.event-row{display:grid;grid-template-columns:110px 1fr 130px;gap:12px;padding:12px 0;border-bottom:1px solid #eceeec}.event-row:last-child{border:0}.event-row strong,.event-row span{font-size:13px}.event-row .condition{color:var(--muted)}.update-form{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.update-form label{font-size:12px;font-weight:750;color:var(--muted)}input,select{width:100%;margin-top:6px;border:1px solid #cfd5d1;border-radius:11px;padding:12px;background:#fff;color:var(--ink);font:inherit}.primary{grid-column:1/-1;border:0;border-radius:12px;padding:13px;background:var(--ink);color:#fff;font-weight:800;cursor:pointer}.update-form #save-status{grid-column:1/-1;margin:0}.privacy-note{margin-top:14px;background:#f8fbf9}.privacy-note p{margin-bottom:0;color:var(--muted)}footer{padding:20px 24px 40px;color:var(--muted);font-size:12px}@media(max-width:760px){.hero{display:block}.hero h2{font-size:29px}.hero-metric{border-left:0;border-top:1px solid #48514d;margin-top:24px;padding-left:0}.flow-list,.metric-grid,.two-col{grid-template-columns:1fr}.section-head{display:block}.section-head .muted{text-align:left}.event-row{grid-template-columns:90px 1fr}.event-row .condition{grid-column:2}.update-form{grid-template-columns:1fr}.tabs{overflow-x:auto}.tab{white-space:nowrap}}
+
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">Leather-goods production pilot</div>
+      <h1>Flow Pilot</h1>
+    </div>
+    <div class="demo-pill">Synthetic data</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="kicker">DEMO-101 · Ladies leather handbag</p>
+        <h2>Find pressure early. Explain loss honestly.</h2>
+        <p class="lede">A small shop-floor prototype combining Production Flow Radar and Production Loss Accounting. No worker ranking. No invented causes.</p>
+      </div>
+      <div class="hero-metric">
+        <span>Shift target</span>
+        <strong id="target">500</strong>
+        <small>good units</small>
+      </div>
+    </section>
+
+    <nav class="tabs" aria-label="App views">
+      <button class="tab active" data-view="radar">Flow Radar</button>
+      <button class="tab" data-view="loss">Loss Accounting</button>
+      <button class="tab" data-view="update">Hourly Update</button>
+      <button class="tab" data-view="setup">Pilot Setup</button>
+    </nav>
+
+    <section id="radar" class="view active">
+      <div class="section-head">
+        <div><p class="kicker">Current production flow</p><h2>Where should we investigate?</h2></div>
+        <p class="muted">Rules explain the signal; they do not assign blame.</p>
+      </div>
+      <div id="flow-list" class="flow-list"></div>
+      <aside id="explanation" class="detail-panel" aria-live="polite">
+        <p class="kicker">Select an operation</p>
+        <h3>Evidence will appear here</h3>
+        <p class="muted">The app separates observation from explanation.</p>
+      </aside>
+    </section>
+
+    <section id="loss" class="view">
+      <div class="section-head">
+        <div><p class="kicker">Loss accounting</p><h2>What actually happened?</h2></div>
+        <p class="muted">Minutes, occurrences and quality counts remain separate metrics.</p>
+      </div>
+      <div class="metric-grid">
+        <article><span>Target</span><strong>500</strong><small>good units</small></article>
+        <article><span>Actual</span><strong id="actual-output">427</strong><small>good units</small></article>
+        <article class="warn"><span>Plan gap</span><strong id="shortfall">73</strong><small>not automatically “lost units”</small></article>
+      </div>
+      <div class="two-col">
+        <div>
+          <h3>Net blocking minutes</h3>
+          <div id="pareto" class="pareto"></div>
+          <p class="micro">Overlapping causes remain “Overlap / unresolved” until evidence supports allocation.</p>
+        </div>
+        <div>
+          <h3>Quality genealogy</h3>
+          <div id="quality" class="quality"></div>
+        </div>
+      </div>
+      <div class="event-list-wrap">
+        <h3>Recorded disturbances</h3>
+        <div id="events" class="event-list"></div>
+      </div>
+      <form id="issue-form" class="update-form issue-form">
+        <label>Operation<select id="issue-op-select"></select></label>
+        <label>Observed condition<select id="category-select"><option value="MATERIAL">Material/component</option><option value="MACHINE">Machine/equipment</option><option value="QUALITY">Quality/rework</option><option value="MANPOWER">Manpower</option><option value="PROCESS">Process/method</option><option value="PLANNING">Planning</option><option value="EXTERNAL">External/job-work</option><option value="UNKNOWN">Unknown</option></select></label>
+        <label>Short note<input id="condition-input" placeholder="What did you actually observe?" /></label>
+        <button class="primary" type="submit">Start issue timer</button>
+        <p id="issue-status" class="micro"></p>
+        <div id="open-issues" class="open-issues"></div>
+      </form>
+      <form id="quality-form" class="update-form issue-form">
+        <label>Inspected<input id="q-inspected" type="number" min="0" /></label>
+        <label>First-pass failures<input id="q-failed" type="number" min="0" /></label>
+        <label>Recovered after rework<input id="q-recovered" type="number" min="0" /></label>
+        <label>Final rejects<input id="q-rejected" type="number" min="0" /></label>
+        <label>Still in rework<input id="q-pending" type="number" min="0" value="0" /></label>
+        <button class="primary" type="submit">Add quality cohort</button>
+        <p id="quality-status" class="micro"></p>
+      </form>
+      <form id="intervention-form" class="update-form issue-form">
+        <label>Resolved issue<select id="intervention-event"></select></label>
+        <label>Action taken<input id="action-input" placeholder="e.g. machine changed" /></label>
+        <label>Observed outcome<select id="outcome-select"><option value="UNKNOWN">Not known yet</option><option value="IMPROVED">Improved afterward</option><option value="NO_CHANGE">No material change</option><option value="WORSENED">Worsened afterward</option></select></label>
+        <button class="primary" type="submit">Record intervention evidence</button>
+      </form>
+    </section>
+
+    <section id="update" class="view">
+      <div class="section-head">
+        <div><p class="kicker">Fast observation</p><h2>One operation, one interval</h2></div>
+        <p class="muted">Blank means unknown. It never becomes zero automatically.</p>
+      </div>
+      <form id="update-form" class="update-form">
+        <label>Operation<select id="op-select"></select></label>
+        <label>Good output<input id="good-input" type="number" min="0" inputmode="numeric" placeholder="e.g. 47" /></label>
+        <label>WIP waiting<input id="wip-input" type="number" min="0" inputmode="numeric" placeholder="e.g. 92" /></label>
+        <label>Minutes represented<input id="minutes-input" type="number" min="1" max="720" value="60" inputmode="numeric" /></label>
+        <label>Stop status<select id="stop-select"><option value="normal">Working normally</option><option value="planned">Planned stop</option><option value="unplanned">Unplanned stop</option></select></label>
+        <label class="check"><input id="buffer-input" type="checkbox" /> WIP here is an intentional planned buffer/batch</label>
+        <button class="primary" type="submit">Save observation locally</button>
+        <p id="save-status" class="micro" role="status"></p>
+      </form>
+      <form id="result-form" class="update-form compact-form">
+        <label>Current/final good output<input id="actual-input" type="number" min="0" placeholder="e.g. 427" /></label>
+        <button class="primary" type="submit">Update good output</button>
+      </form>
+      <form id="correction-form" class="update-form compact-form">
+        <label>Observation to correct<select id="correction-select"></select></label>
+        <label>Correct good output<input id="correct-good" type="number" min="0" /></label>
+        <label>Correct WIP<input id="correct-wip" type="number" min="0" /></label>
+        <label>Reason for correction<input id="correction-reason" placeholder="Required" /></label>
+        <button class="primary" type="submit">Save correction with history</button>
+        <p id="correction-status" class="micro"></p>
+      </form>
+      <div class="privacy-note">
+        <strong>Pilot boundary</strong>
+        <p>This demo stores manual entries only in this browser. It contains synthetic data only and sends nothing to a server.</p>
+      </div>
+    </section>
+
+    <section id="setup" class="view">
+      <div class="section-head">
+        <div><p class="kicker">Private local pilot</p><h2>Configure one simple production flow</h2></div>
+        <p class="muted">This changes only this browser. Use synthetic values until company permission exists for real production data.</p>
+      </div>
+      <form id="setup-form" class="update-form">
+        <label>Product or style label<input id="style-input" placeholder="e.g. Demo handbag" /></label>
+        <label>Shift target<input id="target-input" type="number" min="0" value="500" /></label>
+        <label>Operations, separated by commas<input id="operations-input" value="Cutting, Skiving, Preparation, Stitching, Assembly, Finishing" /></label>
+        <label>Required flow per hour<input id="rate-input" type="number" min="0" value="60" /></label>
+        <label class="check"><input id="comparable-input" type="checkbox" checked /> Tracked operations use comparable transfer units</label>
+        <button class="primary" type="submit">Start blank local pilot</button>
+        <p class="micro">If operations use different physical units, untick the comparison box. The app will record observations but will not pretend their rates are directly comparable.</p>
+      </form>
+      <div class="privacy-note">
+        <strong>Local backup</strong>
+        <p>Export creates a JSON file on this device. It does not upload anything.</p>
+        <button id="export-button" class="secondary" type="button">Export local backup</button>
+        <button id="demo-button" class="secondary" type="button">Return to synthetic demo</button>
+      </div>
+      <div class="privacy-note">
+        <strong>Shift lifecycle</strong>
+        <p id="shift-status">Demo mode</p>
+        <input id="lifecycle-reason" placeholder="Reason required for reopening a closed shift" />
+        <button id="close-shift" class="secondary" type="button">Close shift</button>
+        <button id="reopen-shift" class="secondary" type="button">Reopen shift</button>
+      </div>
+      <div class="event-list-wrap">
+        <h3>Local audit history</h3>
+        <div id="audit-list" class="event-list"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>Simulation Fixture 001 · prototype v0.3</footer>
+  <script>
+const STATES = Object.freeze({
+  UNKNOWN: "UNKNOWN",
+  HEALTHY: "HEALTHY",
+  PRESSURE: "PRESSURE",
+  POSSIBLE_CONSTRAINT: "POSSIBLE_CONSTRAINT",
+  STARVED: "STARVED",
+  PLANNED_STOP: "PLANNED_STOP",
+  UNPLANNED_STOP: "UNPLANNED_STOP",
+  PLANNED_BUFFER: "PLANNED_BUFFER",
+  CONFLICTED: "CONFLICTED"
+});
+
+function assertNonNegative(value, field) {
+  if (value == null) return;
+  if (!Number.isFinite(value) || value < 0) throw new Error(`${field} must be a non-negative finite number`);
+}
+
+function validateObservation(o) {
+  for (const field of ["goodOutput", "queueBefore", "plannedStopMinutes", "unplannedStopMinutes"]) {
+    assertNonNegative(o[field], field);
+  }
+  if (!(o.intervalStart instanceof Date) || !(o.intervalEnd instanceof Date) || o.intervalEnd <= o.intervalStart) {
+    throw new Error("intervalEnd must be after intervalStart");
+  }
+  const minutes = (o.intervalEnd - o.intervalStart) / 60000;
+  const stopped = (o.plannedStopMinutes ?? 0) + (o.unplannedStopMinutes ?? 0);
+  if (stopped > minutes) throw new Error("stop minutes cannot exceed interval duration");
+  return true;
+}
+
+function calendarRate(o) {
+  validateObservation(o);
+  if (o.goodOutput == null) return null;
+  const hours = (o.intervalEnd - o.intervalStart) / 3600000;
+  return o.goodOutput / hours;
+}
+
+function runningRate(o) {
+  validateObservation(o);
+  if (o.goodOutput == null) return null;
+  const total = (o.intervalEnd - o.intervalStart) / 60000;
+  const productive = total - (o.plannedStopMinutes ?? 0) - (o.unplannedStopMinutes ?? 0);
+  return productive === 0 ? null : o.goodOutput / (productive / 60);
+}
+
+function requiredRate({ plannedQuantity, cumulativeGood, remainingProductiveHours }) {
+  [plannedQuantity, cumulativeGood].forEach((v, i) => assertNonNegative(v, i ? "cumulativeGood" : "plannedQuantity"));
+  assertNonNegative(remainingProductiveHours, "remainingProductiveHours");
+  if (remainingProductiveHours === 0) return null;
+  return Math.max(0, plannedQuantity - cumulativeGood) / remainingProductiveHours;
+}
+
+function classifyInterval({ current, previous, required, minQueue = 1, conflicted = false, scheduled = true }) {
+  if (conflicted) return { state: STATES.CONFLICTED, reasons: ["Conflicting observations require resolution"] };
+  if (!scheduled) return { state: STATES.UNKNOWN, reasons: ["Operation not scheduled"] };
+  validateObservation(current);
+  if (current.goodOutput == null || current.queueBefore == null || required == null) {
+    return { state: STATES.UNKNOWN, reasons: ["Required evidence is missing"] };
+  }
+  const duration = (current.intervalEnd - current.intervalStart) / 60000;
+  if ((current.plannedStopMinutes ?? 0) === duration) return { state: STATES.PLANNED_STOP, reasons: ["Whole interval is a planned stop"] };
+  if ((current.unplannedStopMinutes ?? 0) > 0 && current.goodOutput === 0) return { state: STATES.UNPLANNED_STOP, reasons: ["Unplanned stop with no output"] };
+  if (current.intentionalBuffer === true) return { state: STATES.PLANNED_BUFFER, reasons: ["Queue is marked as an intentional production buffer; queue growth is not used as bottleneck evidence"] };
+
+  const rate = calendarRate(current);
+  if (current.queueBefore < minQueue && rate < required) {
+    return { state: STATES.STARVED, reasons: ["Insufficient work available", "Observed rate is below required rate"] };
+  }
+  if (!previous || previous.queueBefore == null) {
+    return rate < required
+      ? { state: STATES.UNKNOWN, reasons: ["Rate deficit observed but queue trend is not yet available"] }
+      : { state: STATES.HEALTHY, reasons: ["Observed rate meets current requirement"] };
+  }
+  const queueDelta = current.queueBefore - previous.queueBefore;
+  if (rate < required && queueDelta > 0) {
+    return { state: STATES.PRESSURE, reasons: ["Work is available", "Observed rate is below required rate", "Queue is increasing"], rate, queueDelta };
+  }
+  return { state: STATES.HEALTHY, reasons: ["No combined rate-deficit and queue-growth signal"], rate, queueDelta };
+}
+
+function classifySeries({ observations, required, minQueue = 1, persistenceIntervals = 2 }) {
+  if (!observations.length) return { state: STATES.UNKNOWN, reasons: ["No observations"] };
+  const results = observations.map((current, i) => classifyInterval({ current, previous: observations[i - 1], required, minQueue }));
+  const tail = results.slice(-persistenceIntervals);
+  if (tail.length === persistenceIntervals && tail.every(r => r.state === STATES.PRESSURE)) {
+    return { ...results.at(-1), state: STATES.POSSIBLE_CONSTRAINT, reasons: [...results.at(-1).reasons, `Pressure persisted for ${persistenceIntervals} valid intervals`] };
+  }
+  return results.at(-1);
+}
+
+function planVariance(planned, actualGood) {
+  assertNonNegative(planned, "planned");
+  assertNonNegative(actualGood, "actualGood");
+  return { signedVariance: actualGood - planned, shortfall: Math.max(0, planned - actualGood) };
+}
+
+function unionIntervals(intervals) {
+  if (!intervals.length) return { intervals: [], totalMinutes: 0 };
+  const normalized = intervals.map(({ start, end }) => {
+    const s = new Date(start); const e = new Date(end);
+    if (!Number.isFinite(+s) || !Number.isFinite(+e) || e <= s) throw new Error("Invalid interval");
+    return { start: s, end: e };
+  }).sort((a, b) => a.start - b.start);
+  const merged = [{ ...normalized[0] }];
+  for (const next of normalized.slice(1)) {
+    const cur = merged.at(-1);
+    if (next.start <= cur.end) cur.end = new Date(Math.max(+cur.end, +next.end));
+    else merged.push({ ...next });
+  }
+  return { intervals: merged, totalMinutes: merged.reduce((sum, x) => sum + (x.end - x.start) / 60000, 0) };
+}
+
+function segmentEvents(events) {
+  const clean = events.map(e => ({ ...e, start: new Date(e.start), end: new Date(e.end) }));
+  clean.forEach(e => { if (!Number.isFinite(+e.start) || !Number.isFinite(+e.end) || e.end <= e.start) throw new Error("Invalid event interval"); });
+  const points = [...new Set(clean.flatMap(e => [+e.start, +e.end]))].sort((a, b) => a - b);
+  const segments = [];
+  for (let i = 0; i < points.length - 1; i++) {
+    const start = new Date(points[i]); const end = new Date(points[i + 1]);
+    const active = clean.filter(e => e.start < end && e.end > start);
+    if (active.length) segments.push({ start, end, minutes: (end - start) / 60000, eventIds: active.map(e => e.id), categories: active.map(e => e.category) });
+  }
+  return segments;
+}
+
+function downtimePareto(events) {
+  const segments = segmentEvents(events);
+  const totals = new Map();
+  for (const s of segments) {
+    const unique = [...new Set(s.categories)];
+    const key = unique.length === 1 ? unique[0] : "OVERLAP_UNRESOLVED";
+    totals.set(key, (totals.get(key) ?? 0) + s.minutes);
+  }
+  return [...totals.entries()].map(([category, minutes]) => ({ category, minutes })).sort((a, b) => b.minutes - a.minutes);
+}
+
+function scopedDowntimePareto(events, scopeField = "operation") {
+  const groups = new Map();
+  for (const event of events) {
+    const scope = event[scopeField];
+    if (!scope) throw new Error(`Every event needs ${scopeField} before scoped aggregation`);
+    if (!groups.has(scope)) groups.set(scope, []);
+    groups.get(scope).push(event);
+  }
+  return [...groups.entries()].flatMap(([scope, scopedEvents]) =>
+    downtimePareto(scopedEvents).map(row => ({ ...row, scope }))
+  ).sort((a,b)=>b.minutes-a.minutes);
+}
+
+function qualityBalance({ failed, recovered = 0, rejected = 0, inRework = 0 }) {
+  [failed, recovered, rejected, inRework].forEach((v, i) => assertNonNegative(v, ["failed", "recovered", "rejected", "inRework"][i]));
+  const accounted = recovered + rejected + inRework;
+  if (accounted !== failed) throw new Error(`Quality conservation failed: ${failed} failed but ${accounted} accounted`);
+  return { failed, recovered, rejected, inRework, balanced: true };
+}
+
+const fixture = {
+  name: "Simulation Fixture 001 — leather-goods production",
+  disclaimer: "Synthetic training data only. Not real factory production data.",
+  order: { reference: "DEMO-101", style: "Ladies leather handbag", target: 500 },
+  operations: ["Cutting", "Skiving", "Preparation", "Stitching", "Assembly", "Finishing"],
+  intervals: ["09–10", "10–11", "11–12", "12–13"],
+  observations: {
+    Cutting:      [[78,18],[76,17],[75,16],[77,18]],
+    Skiving:      [[70,22],[69,24],[68,27],[69,29]],
+    Preparation:  [[66,28],[64,31],[42,49],[65,41]],
+    Stitching:    [[62,31],[54,56],[47,92],[45,126]],
+    Assembly:     [[60,24],[55,15],[43,7],[31,3]],
+    Finishing:    [[58,20],[54,14],[40,6],[27,2]]
+  },
+  events: [
+    { id: "E1", operation: "Preparation", category: "MATERIAL", start: "2026-10-05T10:18:00", end: "2026-10-05T10:45:00", condition: "Component unavailable" },
+    { id: "E2", operation: "Stitching", category: "MACHINE", start: "2026-10-05T11:10:00", end: "2026-10-05T11:40:00", condition: "Machine unavailable" },
+    { id: "E3", operation: "Stitching", category: "MATERIAL", start: "2026-10-05T11:25:00", end: "2026-10-05T11:55:00", condition: "Component unavailable" }
+  ],
+  quality: { inspected: 450, firstPassGood: 436, failed: 14, recovered: 10, rejected: 4, inRework: 0 }
+};
+
+
+
+const KEY="flowPilotStateV03";
+const el=id=>document.getElementById(id);
+const makeId=()=>globalThis.crypto?.randomUUID?.() ?? `local-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+const labels={HEALTHY:"Healthy",PRESSURE:"Pressure",POSSIBLE_CONSTRAINT:"Possible constraint",STARVED:"Starved",UNKNOWN:"Unknown",PLANNED_STOP:"Planned stop",UNPLANNED_STOP:"Unplanned stop",PLANNED_BUFFER:"Planned buffer",CONFLICTED:"Conflicted data"};
+let pilot=JSON.parse(localStorage.getItem(KEY)||"null");
+
+const demoConfig={style:fixture.order.style,target:fixture.order.target,operations:fixture.operations,requiredRate:60,comparable:true};
+const cfg=()=>pilot?.mode==="pilot"?pilot.config:demoConfig;
+const isOpen=()=>pilot?.mode==="pilot"&&pilot.status==="OPEN";
+function persist(){if(pilot?.mode==="pilot")localStorage.setItem(KEY,JSON.stringify(pilot));}
+function audit(action,details={}){pilot.audit.push({id:makeId(),at:new Date().toISOString(),action,details});}
+function requireOpen(statusEl){if(isOpen())return true;if(statusEl)statusEl.textContent="Not saved: this shift is closed.";return false;}
+
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".tab,.view").forEach(x=>x.classList.remove("active"));b.classList.add("active");el(b.dataset.view).classList.add("active");}));
+
+function demoSeries(op){return fixture.observations[op].map((r,i)=>({intervalStart:new Date(`2026-10-05T${9+i}:00:00Z`),intervalEnd:new Date(`2026-10-05T${10+i}:00:00Z`),goodOutput:r[0],queueBefore:r[1],plannedStopMinutes:0,unplannedStopMinutes:0}));}
+function localSeries(op){return pilot.observations.filter(x=>x.operation===op).sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt)).map(x=>({intervalStart:new Date(new Date(x.createdAt)-x.minutes*60000),intervalEnd:new Date(x.createdAt),goodOutput:x.goodOutput,queueBefore:x.queueBefore,plannedStopMinutes:x.stop==="planned"?x.minutes:0,unplannedStopMinutes:x.stop==="unplanned"?x.minutes:0,intentionalBuffer:x.intentionalBuffer===true}));}
+
+const states=new Map();
+function renderRadar(){const c=cfg();el("target").textContent=c.target;el("flow-list").innerHTML="";states.clear();c.operations.forEach(op=>{const series=pilot?.mode==="pilot"?localSeries(op):demoSeries(op);let result={state:STATES.UNKNOWN,reasons:["No observations yet"]};if(!c.comparable)result={state:STATES.UNKNOWN,reasons:["Rate comparison disabled because transfer units are not confirmed comparable"]};else if(series.length)result=classifySeries({observations:series,required:c.requiredRate,minQueue:5,persistenceIntervals:2});const latest=series.at(-1);states.set(op,{series,result,latest});const b=document.createElement("button");b.className="flow-card";b.innerHTML=`<div class="flow-top"><span class="flow-name">${op}</span><span class="badge ${result.state}">${labels[result.state]||result.state}</span></div><div class="flow-stats"><div><strong>${latest?.goodOutput??"—"}</strong><small>good / interval</small></div><div><strong>${latest?.queueBefore??"—"}</strong><small>WIP waiting</small></div></div>`;b.onclick=()=>renderDetail(op);el("flow-list").appendChild(b);});if(c.operations.length)renderDetail(c.operations.includes("Stitching")?"Stitching":c.operations[0]);}
+function renderDetail(op){const {result,latest,series}=states.get(op),prev=series.at(-2);const evidence=latest?`${latest.goodOutput??"unknown"} good · WIP ${prev?.queueBefore??"unknown"} → ${latest.queueBefore??"unknown"}`:"No observation recorded yet.";el("explanation").innerHTML=`<p class="kicker">${op}</p><h3><span class="badge ${result.state}">${labels[result.state]||result.state}</span></h3><ul class="reason-list">${result.reasons.map(r=>`<li>${r}</li>`).join("")}</ul><p class="micro">Latest evidence: ${evidence}. This is a system signal, not a statement about worker responsibility.</p>`;}
+
+function qualityTotals(){if(pilot?.mode!=="pilot")return fixture.quality;return pilot.quality.reduce((a,q)=>({inspected:a.inspected+q.inspected,firstPassGood:a.firstPassGood+(q.inspected-q.failed),failed:a.failed+q.failed,recovered:a.recovered+q.recovered,rejected:a.rejected+q.rejected,inRework:a.inRework+q.inRework}),{inspected:0,firstPassGood:0,failed:0,recovered:0,rejected:0,inRework:0});}
+function renderLoss(){const c=cfg(),actual=pilot?.mode==="pilot"?(pilot.actualGood||0):427,pv=planVariance(c.target,actual);el("actual-output").textContent=actual;el("shortfall").textContent=pv.shortfall;const events=pilot?.mode==="pilot"?pilot.events.filter(e=>e.end):fixture.events;const p=events.length?scopedDowntimePareto(events):[],max=Math.max(...p.map(x=>x.minutes),1);el("pareto").innerHTML=p.length?p.map(x=>`<div class="pareto-row"><span>${x.scope} · ${x.category.replaceAll("_"," / ")}</span><div class="bar-track"><div class="bar" style="width:${100*x.minutes/max}%"></div></div><strong>${Math.round(x.minutes)}m</strong></div>`).join(""):"<p class='muted'>No resolved disturbance events yet.</p>";const q=qualityTotals();if(q.failed)qualityBalance({failed:q.failed,recovered:q.recovered,rejected:q.rejected,inRework:q.inRework});el("quality").innerHTML=[["Inspected",q.inspected],["First-pass good",q.firstPassGood],["First-pass failures",q.failed],["Recovered after rework",q.recovered],["Final rejects",q.rejected],["Still in rework",q.inRework]].map(([k,v])=>`<div class="quality-row"><span>${k}</span><strong>${v}</strong></div>`).join("");el("events").innerHTML=events.length?events.map(e=>`<div class="event-row"><strong>${e.operation}</strong><span>${e.category}</span><span class="condition">${e.condition||"No description"}${e.intervention?` · Action: ${e.intervention.action} · Outcome: ${e.intervention.outcome}`:""}</span></div>`).join(""):"<p class='muted'>No resolved disturbance events yet.</p>";}
+
+function renderOpenIssues(){if(pilot?.mode!=="pilot"){el("open-issues").innerHTML="";return;}const open=pilot.events.filter(x=>!x.end);el("open-issues").innerHTML=open.map(x=>`<div class="open-issue"><span><strong>${x.operation}</strong> · ${x.category} · ${x.condition||"No note"}</span><button class="resolve" data-resolve="${x.id}" type="button">Resolve</button></div>`).join("");document.querySelectorAll("[data-resolve]").forEach(b=>b.onclick=()=>{if(!requireOpen(el("issue-status")))return;const event=pilot.events.find(x=>x.id===b.dataset.resolve);if(event&&!event.end){event.end=new Date().toISOString();audit("ISSUE_RESOLVED",{eventId:event.id});persist();refresh();}});}
+function renderSelectors(){const ops=cfg().operations.map(op=>`<option>${op}</option>`).join("");el("op-select").innerHTML=ops;el("issue-op-select").innerHTML=ops;if(pilot?.mode==="pilot"){el("correction-select").innerHTML=pilot.observations.map(x=>`<option value="${x.id}">${x.operation} · ${new Date(x.createdAt).toLocaleTimeString()}</option>`).join("");el("intervention-event").innerHTML=pilot.events.filter(x=>x.end).map(x=>`<option value="${x.id}">${x.operation} · ${x.category}</option>`).join("");}else{el("correction-select").innerHTML="";el("intervention-event").innerHTML="";}}
+function renderLifecycle(){el("shift-status").textContent=pilot?.mode==="pilot"?`Shift is ${pilot.status}. ${pilot.status==="CLOSED"?"Operational entries are locked.":"Entries are allowed."}`:"Synthetic demo mode";const items=pilot?.mode==="pilot"?pilot.audit.slice().reverse():[];el("audit-list").innerHTML=items.length?items.map(x=>`<div class="event-row"><strong>${x.action}</strong><span>${new Date(x.at).toLocaleString()}</span><span class="condition">${JSON.stringify(x.details)}</span></div>`).join(""):"<p class='muted'>No local audit entries yet.</p>";}
+function refresh(){renderSelectors();renderRadar();renderLoss();renderOpenIssues();renderLifecycle();}
+
+el("setup-form").onsubmit=e=>{e.preventDefault();const ops=el("operations-input").value.split(",").map(x=>x.trim()).filter(Boolean),target=Number(el("target-input").value),requiredRate=Number(el("rate-input").value);if(!ops.length||target<0||requiredRate<0)return;pilot={mode:"pilot",status:"OPEN",config:{style:el("style-input").value.trim()||"Local pilot",target,operations:[...new Set(ops)],requiredRate,comparable:el("comparable-input").checked},observations:[],events:[],quality:[],actualGood:0,audit:[],createdAt:new Date().toISOString()};audit("SHIFT_CREATED",{style:pilot.config.style,target});persist();refresh();};
+el("update-form").onsubmit=e=>{e.preventDefault();if(!requireOpen(el("save-status")))return;const good=el("good-input").value===""?null:Number(el("good-input").value),wip=el("wip-input").value===""?null:Number(el("wip-input").value),minutes=Number(el("minutes-input").value);if((good!=null&&good<0)||(wip!=null&&wip<0)||!Number.isFinite(minutes)||minutes<=0){el("save-status").textContent="Not saved: invalid value.";return;}const record={id:makeId(),operation:el("op-select").value,goodOutput:good,queueBefore:wip,minutes,stop:el("stop-select").value,intentionalBuffer:el("buffer-input").checked,createdAt:new Date().toISOString(),revisions:[]};pilot.observations.push(record);audit("OBSERVATION_ADDED",{observationId:record.id,operation:record.operation});persist();el("save-status").textContent="Saved locally. Nothing was uploaded.";refresh();};
+el("result-form").onsubmit=e=>{e.preventDefault();if(!requireOpen())return;const actual=Number(el("actual-input").value);if(!Number.isFinite(actual)||actual<0)return;const previous=pilot.actualGood;pilot.actualGood=actual;audit("GOOD_OUTPUT_UPDATED",{previous,next:actual});persist();refresh();};
+el("issue-form").onsubmit=e=>{e.preventDefault();if(!requireOpen(el("issue-status")))return;const event={id:makeId(),operation:el("issue-op-select").value,category:el("category-select").value,condition:el("condition-input").value.trim(),start:new Date().toISOString(),end:null,attributionStatus:"OBSERVED",createdAt:new Date().toISOString()};pilot.events.push(event);audit("ISSUE_STARTED",{eventId:event.id,operation:event.operation,category:event.category});persist();el("condition-input").value="";el("issue-status").textContent="Issue started locally.";refresh();};
+el("quality-form").onsubmit=e=>{e.preventDefault();if(!requireOpen(el("quality-status")))return;const inspected=Number(el("q-inspected").value),failed=Number(el("q-failed").value),recovered=Number(el("q-recovered").value),rejected=Number(el("q-rejected").value),inRework=Number(el("q-pending").value);try{if([inspected,failed,recovered,rejected,inRework].some(v=>!Number.isFinite(v)||v<0)||failed>inspected)throw new Error("Counts are invalid");qualityBalance({failed,recovered,rejected,inRework});const q={id:makeId(),inspected,failed,recovered,rejected,inRework,createdAt:new Date().toISOString()};pilot.quality.push(q);audit("QUALITY_COHORT_ADDED",{cohortId:q.id,inspected,failed});persist();el("quality-status").textContent="Quality cohort saved; physical-unit balance passed.";refresh();}catch(err){el("quality-status").textContent=`Not saved: ${err.message}`;}};
+el("correction-form").onsubmit=e=>{e.preventDefault();if(!requireOpen(el("correction-status")))return;const record=pilot.observations.find(x=>x.id===el("correction-select").value),reason=el("correction-reason").value.trim();if(!record||!reason){el("correction-status").textContent="Choose an observation and enter a reason.";return;}const good=Number(el("correct-good").value),wip=Number(el("correct-wip").value);if(!Number.isFinite(good)||good<0||!Number.isFinite(wip)||wip<0){el("correction-status").textContent="Correction values must be zero or positive.";return;}const previous={goodOutput:record.goodOutput,queueBefore:record.queueBefore};record.revisions.push({at:new Date().toISOString(),previous,next:{goodOutput:good,queueBefore:wip},reason});record.goodOutput=good;record.queueBefore=wip;audit("OBSERVATION_CORRECTED",{observationId:record.id,reason,previous,next:{goodOutput:good,queueBefore:wip}});persist();el("correction-status").textContent="Correction saved; original values remain in history.";refresh();};
+el("intervention-form").onsubmit=e=>{e.preventDefault();if(!requireOpen())return;const event=pilot.events.find(x=>x.id===el("intervention-event").value),action=el("action-input").value.trim();if(!event||!action)return;event.intervention={action,outcome:el("outcome-select").value,recordedAt:new Date().toISOString()};audit("INTERVENTION_RECORDED",{eventId:event.id,action,outcome:event.intervention.outcome});persist();el("action-input").value="";refresh();};
+el("close-shift").onclick=()=>{if(pilot?.mode!=="pilot"||pilot.status!=="OPEN")return;if(pilot.events.some(e=>!e.end)){el("shift-status").textContent="Cannot close: resolve open disturbance events first.";return;}pilot.status="CLOSED";audit("SHIFT_CLOSED",{actualGood:pilot.actualGood});persist();refresh();};
+el("reopen-shift").onclick=()=>{if(pilot?.mode!=="pilot"||pilot.status!=="CLOSED")return;const reason=el("lifecycle-reason").value.trim();if(!reason){el("shift-status").textContent="Reopening requires a reason so history remains explainable.";return;}pilot.status="OPEN";audit("SHIFT_REOPENED",{reason});el("lifecycle-reason").value="";persist();refresh();};
+el("demo-button").onclick=()=>{pilot=null;localStorage.removeItem(KEY);refresh();};
+el("export-button").onclick=()=>{const payload=pilot?.mode==="pilot"?pilot:{mode:"demo",fixture},blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=`flow-pilot-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(url);};
+
+refresh();
+
+
+</script>
+</body>
+</html>
